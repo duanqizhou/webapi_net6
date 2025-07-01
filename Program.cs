@@ -16,6 +16,7 @@ namespace webapi
     {
         public static void Main(string[] args)
         {
+
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
@@ -66,8 +67,14 @@ namespace webapi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var sugar = new SqlSugarService(builder.Configuration).Db;
-            webapi.Tools.DbFirstGenerator.Generate(sugar);
+            //当前是开发环境
+            if (builder.Environment.IsDevelopment())
+            {
+                //var sugar = new SqlSugarService(builder.Configuration).Db;
+                //webapi.Tools.DbFirstGenerator.Generate(sugar);
+            }
+
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
@@ -77,7 +84,11 @@ namespace webapi
                           .AllowAnyMethod();
                 });
             });
-
+            //builder.WebHost.ConfigureKestrel(options =>
+            //{
+            //    options.ListenAnyIP(6060); // HTTP
+            //                               // options.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // 可选：HTTPS
+            //});
             var app = builder.Build();
             app.UseMiddleware<ExceptionMiddleware>();
             if (app.Environment.IsDevelopment())
@@ -87,7 +98,8 @@ namespace webapi
             }
             app.UseCors("AllowAll");
 
-            app.UseHttpsRedirection();
+
+            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
 

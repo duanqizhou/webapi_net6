@@ -21,7 +21,8 @@ public class SqlSugarService
         // 可选：打印执行的 SQL 日志
         Db.Aop.OnLogExecuting = (sql, pars) =>
         {
-            log.Info($" 【SQL】: {sql}");
+            //log.Info($" 【SQL】: {sql}");
+            //Console.WriteLine($"【SQL】: {sql}");
         };
     }
 }

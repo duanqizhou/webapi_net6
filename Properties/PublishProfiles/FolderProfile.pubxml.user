@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>E:\vsCursor\webapi\webapi\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2025-07-01T11:55:14.0468206Z||;True|2025-07-01T19:51:45.2710795+08:00||;True|2025-07-01T19:51:13.1786241+08:00||;True|2025-07-01T19:50:39.0402183+08:00||;False|2025-07-01T19:50:19.6081126+08:00||;True|2025-07-01T19:45:39.2184456+08:00||;True|2025-07-01T19:30:20.6428435+08:00||;True|2025-07-01T19:28:03.0787026+08:00||;True|2025-07-01T19:17:41.6931565+08:00||;True|2025-07-01T19:11:53.6863810+08:00||;True|2025-07-01T19:07:18.9942675+08:00||;True|2025-07-01T19:00:46.8174850+08:00||;True|2025-07-01T18:53:41.9955171+08:00||;True|2025-07-01T18:48:13.2338334+08:00||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
