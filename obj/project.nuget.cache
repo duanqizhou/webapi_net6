@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "YJ0yoA8zKaE=",
+  "dgSpecHash": "y/h5qCw0Ms0=",
   "success": true,
   "projectFilePath": "E:\\vsCursor\\webapi\\webapi\\webapi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\duanq\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\duanq\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\duanq\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\duanq\\.nuget\\packages\\log4net\\3.1.0\\log4net.3.1.0.nupkg.sha512",
     "C:\\Users\\duanq\\.nuget\\packages\\mapster\\7.4.0\\mapster.7.4.0.nupkg.sha512",
     "C:\\Users\\duanq\\.nuget\\packages\\mapster.core\\1.2.1\\mapster.core.1.2.1.nupkg.sha512",

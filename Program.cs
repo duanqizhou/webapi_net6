@@ -62,6 +62,9 @@ namespace webapi
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IUserRolesServices, UserRolesServices>();
+            builder.Services.AddScoped<IRolesServices, RolesServices>();
+
 
 
             builder.Services.AddEndpointsApiExplorer();
@@ -72,6 +75,7 @@ namespace webapi
             {
                 var sugar = new SqlSugarService(builder.Configuration).Db;
                 webapi.Tools.DbFirstGenerator.Generate(sugar);
+                webapi.Tools.PermissionScanner.GeneratePermissions(sugar);
             }
             builder.Services.AddCors(options =>
             {

@@ -12,6 +12,7 @@ namespace webapi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class AuthController : ControllerBase
 {
     private readonly JwtHelper _jwt;
@@ -28,22 +29,35 @@ public class AuthController : ControllerBase
     }
     [AllowAnonymous]
     [HttpPost("login")]
-    public IActionResult Login([FromBody] UserDto req)
+    public IActionResult Login([FromBody] LoginUserDto req)
     {
-        if (req == null || string.IsNullOrEmpty(req.Username) || string.IsNullOrEmpty(req.PasswordHash))
+        //string hash = BCrypt.Net.BCrypt.HashPassword("123456");
+        if (req.code != "zdq")
+        {
+            return Unauthorized(ApiResponse.Error("验证码错误", 401));
+        }
+        if (req == null || string.IsNullOrEmpty(req.Username) || string.IsNullOrEmpty(req.Password))
         {
             return BadRequest(ApiResponse.Error("用户名或密码不能为空", 400));
         }
         // 验证用户名和密码
-        var user = _userServices.GetAll().FirstOrDefault(u => u.Username == req.Username && u.PasswordHash == req.PasswordHash);
+        var user = _userServices.GetAll().FirstOrDefault(u => u.Username == req.Username);
         if (user == null)
+        {
+            return Unauthorized(ApiResponse.Error("未找到用户", 401));
+        }
+        // 使用 BCrypt 验证密码
+        // req.Password = "123456"
+        // user.PasswordHash = "$2a$11$YsmKOlTYHDkSE2J2TOqUbOkIX38yHLv.lZ3LMs6TgXBqT1ti0qihW"
+
+        bool passwordValid = BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash);
+        if (!passwordValid)
         {
             return Unauthorized(ApiResponse.Error("用户名或密码错误", 401));
         }
-
         string key = _JWTsettings.SecretKey;
         var userId = user.Id;
-        var accessToken = _jwt.GenerateToken(userId.ToString(), key);
+        var accessToken = _jwt.GenerateToken(userId.ToString(), user.Username);
         var refreshToken = _jwt.GenerateRefreshToken();
 
         // 保存 refreshToken 到数据库（你也可以用 Redis）

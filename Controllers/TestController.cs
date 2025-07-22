@@ -20,7 +20,7 @@ namespace webapi.Controllers
         }
 
         [HttpPost("Create")]
-        public IActionResult Create(ATable entity)
+        public IActionResult Create([FromBody] UserDto entity)
         {
             return Ok(ApiResponse.Ok("Test Create successful"));
         }

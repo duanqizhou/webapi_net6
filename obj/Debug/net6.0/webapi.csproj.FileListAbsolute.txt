@@ -127,3 +127,5 @@ E:\vsCursor\webapi\webapi\bin\Debug\net6.0\Mapster.dll
 E:\vsCursor\webapi\webapi\bin\Debug\net6.0\Mapster.Core.dll
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\webapi.sourcelink.json
 E:\vsCursor\webapi\webapi\bin\Debug\net6.0\web.config
+E:\vsCursor\webapi\webapi\bin\Debug\net6.0\BCrypt.Net-Next.dll
+E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt

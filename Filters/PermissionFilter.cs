@@ -37,6 +37,7 @@ public class PermissionFilter : IAsyncActionFilter
             .InnerJoin<UserRoles>((p, rp, ur) => rp.RoleId == ur.RoleId)
             .Where((p, rp, ur) => ur.UserId == userId && p.Url == path && p.Method == method)
             .AnyAsync();
+        Console.WriteLine("hasPermission£º" + hasPermission.ToString());
 
         if (!hasPermission)
         {

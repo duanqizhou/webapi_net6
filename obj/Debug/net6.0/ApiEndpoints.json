@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "req",
-        "Type": "webapi.Models.UserDto",
+        "Type": "webapi.Models.LoginUserDto",
         "IsRequired": true
       }
     ],
@@ -41,7 +41,7 @@
     "Parameters": [
       {
         "Name": "entity",
-        "Type": "webapi.Models.ATable",
+        "Type": "webapi.Models.UserDto",
         "IsRequired": true
       }
     ],
@@ -51,6 +51,16 @@
     "ContainingType": "webapi.Controllers.TestController",
     "Method": "GetAll",
     "RelativePath": "api/Test/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.UserController",
+    "Method": "GetMe",
+    "RelativePath": "api/users/Me",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
