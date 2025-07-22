@@ -121,6 +121,7 @@
 
 ```csharp
 PermissionScanner.GeneratePermissions(sqlSugarClient);
+```
 ---
 
 ## 主要目录结构
