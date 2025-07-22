@@ -4,18 +4,23 @@
 
 ---
 
-## 功能模块与技术栈
 
-- **ASP.NET Core 6.0**：主框架，负责 WebAPI 路由、依赖注入等基础能力
-- **SqlSugar**：高效易用的 .NET ORM，支持 DbFirst/CodeFirst，简化数据库操作
-- **JWT 鉴权**：基于 `Microsoft.AspNetCore.Authentication.JwtBearer` 实现用户登录、Token 校验
-- **全局异常处理中间件**：统一捕获和记录接口异常，返回友好错误信息
-- **统一响应格式**：所有接口返回结构统一（code/message/data），便于前端处理
-- **Swagger**：自动生成 API 文档，支持在线调试
-- **权限管理**：支持用户、角色、权限、角色权限、用户角色等基础表结构
-- **仓储与服务分层**：Repository 封装数据访问，Service 编写业务逻辑，Controller 只处理请求与响应
-- **日志**：集成 log4net，支持日志文件输出
+## ✨ 功能模块与技术栈
+
+- **ASP.NET Core 6.0**：WebAPI 框架，支持中间件、依赖注入、路由等
+- **SqlSugar**：高性能 .NET ORM，支持 CodeFirst / DbFirst 模式
+- **JWT 鉴权**：基于 `Microsoft.AspNetCore.Authentication.JwtBearer` 用户登录颁发 Token，保护后续 API 接口
+- **RBAC 权限管理**：支持角色、权限、用户关系绑定，接口访问控制
+- **统一响应结构**：接口统一格式返回，前后端交互清晰
+- **全局异常处理中间件**：统一拦截并格式化异常输出
+- **Swagger 接口文档**：自动生成 RESTful API 文档
+- **log4net 日志**：记录调试信息、异常信息，便于排查问题
+- **仓储 + 服务分层架构**：清晰的 Controller → Service → Repository 层级结构
+- **权限自动扫描工具**：支持扫描 Controller 方法自动写入权限表
 - **可选扩展**：FluentValidation 参数验证、AutoMapper 对象映射、Mapster 等
+
+
+
 
 ## 权限控制（RBAC）
 
@@ -40,23 +45,100 @@
 - `Permissions`：权限表
 - `UserRoles`：用户与角色关联表
 - `RolePermissions`：角色与权限关联表
+## 📚 数据库表结构说明
+
+### 1. `Users`（用户表）
+
+| 字段名        | 类型       | 说明         |
+|---------------|------------|--------------|
+| Id            | int        | 主键         |
+| UserName      | nvarchar   | 登录用户名   |
+| PasswordHash  | nvarchar   | 密码（哈希） |
+| IsActive      | bit        | 是否启用     |
+
+---
+
+### 2. `Roles`（角色表）
+
+| 字段名   | 类型       | 说明       |
+|----------|------------|------------|
+| Id       | int        | 主键       |
+| Name     | nvarchar   | 角色名     |
+| Remark   | nvarchar   | 备注说明   |
+
+---
+
+### 3. `Permissions`（权限表）
+
+用于记录系统中所有接口的 URL 与操作权限。
+
+| 字段名   | 类型       | 说明                   |
+|----------|------------|------------------------|
+| Id       | int        | 主键                   |
+| Name     | nvarchar   | 权限名称（接口功能）   |
+| Url      | nvarchar   | API 接口地址           |
+| Method   | nvarchar   | 请求类型：GET/POST 等  |
+
+> ✅ 支持从控制器代码中自动扫描 `[HttpGet]`、`[HttpPost]` 等特性并入库。
+
+---
+
+### 4. `UserRoles`（用户-角色关联表）
+
+| 字段名   | 类型     | 说明           |
+|----------|----------|----------------|
+| Id       | int      | 主键           |
+| UserId   | int      | 对应用户       |
+| RoleId   | int      | 对应角色       |
+
+---
+
+### 5. `RolePermissions`（角色-权限关联表）
+
+| 字段名     | 类型     | 说明           |
+|------------|----------|----------------|
+| Id         | int      | 主键           |
+| RoleId     | int      | 对应角色       |
+| PermissionId | int    | 对应权限       |
+
+---
 
 通过 RBAC 设计，系统可以灵活地为不同用户分配不同角色和权限，满足企业级后台管理系统的权限需求。
+## 🔐 权限控制（RBAC）
+
+### ✅ 流程说明：
+
+1. 用户登录，系统根据其角色加载所有权限。
+2. 每次访问受保护接口时，校验用户是否具备对应权限。
+3. 权限校验由 `PermissionFilter` 全局过滤器实现，支持路由 + 方法名验证。
+4. 支持通过代码扫描控制器 API 自动同步 `Permissions` 表。
+
+---
+
+### ✅ 权限扫描工具
+
+在开发阶段，你可以运行以下代码：
+
+```csharp
+PermissionScanner.GeneratePermissions(sqlSugarClient);
 ---
 
 ## 主要目录结构
 
-- `Controllers/` —— 控制器，API 入口
-- `Services/` —— 业务服务层
-- `Repository/` —— 仓储层，封装数据库操作
-- `Models/` —— 实体类（可通过 SqlSugar DbFirst 自动生成）
-- `Common/` —— 通用工具类（如 JwtHelper、ApiResponse 等）
-- `Middleware/` —— 中间件（如全局异常处理）
-- `Dtos/` —— 数据传输对象
-- `Filters/` —— 验证登录
-- `Configs/` —— 配置相关类
-- `appsettings.json` —— 配置文件（数据库连接、JWT 密钥等）
-- `init.sql` —— 数据库初始化脚本
+
+| 目录                 | 说明                          |
+| ------------------ | --------------------------- |
+| `Controllers/`     | 控制器，处理请求并返回响应               |
+| `Services/`        | 服务层，编写业务逻辑                  |
+| `Repository/`      | 仓储层，封装 SqlSugar 数据访问        |
+| `Models/`          | 实体类，对应数据库表结构                |
+| `Common/`          | 工具类，如 JwtHelper、ApiResponse |
+| `Middleware/`      | 中间件，如全局异常处理                 |
+| `Filters/`         | 权限过滤器                       |
+| `Configs/`         | 配置类（如 JWT 设置等）              |
+| `Dtos/`            | 数据传输对象 DTO                  |
+| `appsettings.json` | 配置文件（数据库连接等）                |
+| `init.sql`         | 数据库初始化脚本                    |
 
 ---
 
@@ -109,8 +191,9 @@
 | 6️⃣ | **统一响应格式**          | 统一接口返回结构（如 code/message/data）           |
 | 7️⃣ | **中间件：全局异常处理**    | 捕获并处理全局异常，返回友好错误信息                |
 | 8️⃣ | **Swagger 集成**      | 集成 Swagger，自动生成和测试 API 文档              |
-| 9️⃣ | **可选：验证与对象映射**    | 集成 FluentValidation 进行参数验证，AutoMapper 做对象映射（可选） |
+| 9️⃣ | **验证与对象映射**    | 集成 FluentValidation 进行参数验证，Mapster 做对象映射 |
 
 ---
+
 
 如需详细开发文档或遇到问题，欢迎提 issue 或交
