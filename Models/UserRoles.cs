@@ -26,16 +26,16 @@ namespace webapi.Models
            /// <summary>
            /// Desc:
            /// Default:
-           /// Nullable:True
+           /// Nullable:False
            /// </summary>           
-           public int? UserId {get;set;}
+           public int UserId {get;set;}
 
            /// <summary>
            /// Desc:
            /// Default:
-           /// Nullable:True
+           /// Nullable:False
            /// </summary>           
-           public int? RoleId {get;set;}
+           public int RoleId {get;set;}
 
     }
 }

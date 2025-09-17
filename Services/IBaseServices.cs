@@ -1,3 +1,5 @@
+using SqlSugar;
+using System.Linq.Expressions;
 using webapi.Models;
 
 namespace webapi.Services;
@@ -5,8 +7,30 @@ namespace webapi.Services;
 public interface IBaseServices<T> where T : class
 {
     List<T> GetAll();
-    int Add(T entity);
-    int Update(T entity);
-    int Delete(int id);
     T GetById(int id);
+    T GetById(string id);
+
+    List<T> GetList(Expression<Func<T, bool>> predicate);
+    T GetSingle(Expression<Func<T, bool>> predicate);
+
+    int Add(T entity);
+    Task<bool> AddAsync(T entity);
+    int AddRange(List<T> entities);
+
+    int Update(T entity);
+    Task<bool> UpdateAsync(T entity);
+
+
+    int Delete(int id);
+    Task<bool> DeleteAsync(int id);
+
+
+    int Delete(Expression<Func<T, bool>> predicate);
+    int DeleteRange(List<int> ids);
+
+    Task<List<T>> GetPagedAsync(int page, int size, Expression<Func<T, bool>>? whereExpression, RefAsync<int> totalCount);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+    Task<List<T>> GetListExpressionAsync(Expression<Func<T, bool>> predicate);
+    Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
+
 }

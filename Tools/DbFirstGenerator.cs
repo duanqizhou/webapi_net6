@@ -4,7 +4,7 @@ namespace webapi.Tools;
 
 public class DbFirstGenerator
 {
-    public static void Generate(SqlSugarClient db)
+    public static void Generate(ISqlSugarClient db)
     {
         db.DbFirst
           .IsCreateAttribute(true) // 添加特性标记

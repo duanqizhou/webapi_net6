@@ -8,10 +8,10 @@ namespace webapi.Models
     ///<summary>
     ///
     ///</summary>
-    [SugarTable("Roles")]
-    public partial class Roles
+    [SugarTable("ROLES")]
+    public partial class ROLES
     {
-           public Roles(){
+           public ROLES(){
 
 
            }
@@ -21,14 +21,28 @@ namespace webapi.Models
            /// Nullable:False
            /// </summary>           
            [SugarColumn(IsPrimaryKey=true)]
-           public int Id {get;set;}
+           public string NAME {get;set;}
+
+           /// <summary>
+           /// Desc:
+           /// Default:
+           /// Nullable:False
+           /// </summary>           
+           public int ATTRIBUTES {get;set;}
 
            /// <summary>
            /// Desc:
            /// Default:
            /// Nullable:True
            /// </summary>           
-           public string Name {get;set;}
+           public string DESCRIPTION {get;set;}
+
+           /// <summary>
+           /// Desc:
+           /// Default:
+           /// Nullable:True
+           /// </summary>           
+           public string DBCONNECT {get;set;}
 
     }
 }

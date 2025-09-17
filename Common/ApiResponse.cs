@@ -9,4 +9,7 @@ public class ApiResponse
     public static ApiResponse Ok(object? data = null) => new() { Code = 0, Message = "success", Data = data };
 
     public static ApiResponse Error(string msg, int code = 500) => new() { Code = code, Message = msg };
+
+    public static ApiResponse Fail(string msg, int code = 401) => new() { Code = code, Message = msg };
+
 }

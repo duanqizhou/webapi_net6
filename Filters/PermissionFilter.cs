@@ -30,12 +30,11 @@ public class PermissionFilter : IAsyncActionFilter
         }
 
         var path = context.HttpContext.Request.Path.Value;
+        var routePattern = "/" + (endpoint as Microsoft.AspNetCore.Routing.RouteEndpoint)?.RoutePattern?.RawText;
         var method = context.HttpContext.Request.Method;
 
-        var hasPermission = await _db.Queryable<Permissions>()
-            .InnerJoin<RolePermissions>((p, rp) => p.Id == rp.PermissionId)
-            .InnerJoin<UserRoles>((p, rp, ur) => rp.RoleId == ur.RoleId)
-            .Where((p, rp, ur) => ur.UserId == userId && p.Url == path && p.Method == method)
+        var hasPermission = await _db.Queryable<Permissions>() 
+            .Where(p=>p.Url == routePattern)
             .AnyAsync();
         Console.WriteLine("hasPermission£º" + hasPermission.ToString());
 

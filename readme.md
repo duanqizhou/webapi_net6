@@ -102,6 +102,39 @@
 | PermissionId | int    | 对应权限       |
 
 ---
+-- 用户表
+CREATE TABLE Users (
+    Id INT PRIMARY KEY,
+    Username NVARCHAR(50),
+    PasswordHash NVARCHAR(200)
+);
+
+-- 角色表
+CREATE TABLE Roles (
+    Id INT PRIMARY KEY,
+    Name NVARCHAR(50)
+);
+
+-- 权限表（接口或菜单）
+CREATE TABLE Permissions (
+    Id INT PRIMARY KEY,
+    Name NVARCHAR(50),
+    Url NVARCHAR(200),  -- 接口地址
+    Method NVARCHAR(10) -- GET, POST...
+);
+
+-- 用户角色关系
+CREATE TABLE UserRoles (
+    UserId INT,
+    RoleId INT
+);
+
+-- 角色权限关系
+CREATE TABLE RolePermissions (
+    RoleId INT,
+    PermissionId INT
+);
+
 
 通过 RBAC 设计，系统可以灵活地为不同用户分配不同角色和权限，满足企业级后台管理系统的权限需求。
 ## 🔐 权限控制（RBAC）

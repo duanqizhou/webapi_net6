@@ -21,8 +21,7 @@ namespace webapi
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
             var builder = WebApplication.CreateBuilder(args);
-
-
+            // 注册 CacheService
             // 绑定配置
             builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
@@ -44,9 +43,10 @@ namespace webapi
                 };
             });
             builder.Services.AddControllers();
-            builder.Services.AddSingleton<SqlSugarService>();
+            //builder.Services.AddSingleton<SqlSugarService>();
             builder.Services.AddSingleton<JwtHelper>();
             builder.Services.AddScoped<PermissionFilter>();
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddAuthorization();
 
@@ -54,29 +54,48 @@ namespace webapi
             {
                 options.Filters.Add<PermissionFilter>(); // 全局权限过滤器
             });
-            builder.Services.AddScoped<ISqlSugarClient>(s =>
+            builder.Services.AddSingleton<ISqlSugarClient>(sp =>
             {
-                var sugarService = s.GetRequiredService<SqlSugarService>();
-                return sugarService.Db;
+                var config = new ConnectionConfig
+                {
+                    ConnectionString = builder.Configuration.GetConnectionString("Default"),
+                    DbType = DbType.SqlServer,
+                    IsAutoCloseConnection = true, 
+                    InitKeyType = InitKeyType.Attribute,
+                };
+                return new SqlSugarScope(config); 
             });
+            builder.Services.AddScoped<SqlSugarTransactionHelper>();
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddScoped<Common.ICacheService, CacheService>();
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped<IUserServices, UserServices>();
-            builder.Services.AddScoped<IUserRolesServices, UserRolesServices>();
-            builder.Services.AddScoped<IRolesServices, RolesServices>();
+            builder.Services.AddScoped<IDeptServices, DeptServices>();
+            builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+            builder.Services.AddScoped<IAppsetingsServices, AppsetingsServices>();
 
+            builder.Services.AddScoped<IBaseDrugServices, BaseDrugServices>();
+            builder.Services.AddScoped<IBaseCureServices, BaseCureServices>();
+            builder.Services.AddScoped<IBaseMatServices, BaseMatServices>();
 
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             //当前是开发环境
-            if (builder.Environment.IsDevelopment())
-            {
-                var sugar = new SqlSugarService(builder.Configuration).Db;
-                webapi.Tools.DbFirstGenerator.Generate(sugar);
-                webapi.Tools.PermissionScanner.GeneratePermissions(sugar);
-            }
+            //if (builder.Environment.IsDevelopment())
+            //{
+            //    var db = new SqlSugarScope(new ConnectionConfig
+            //    {
+            //        ConnectionString = builder.Configuration.GetConnectionString("Default"),
+            //        DbType = DbType.SqlServer,
+            //        IsAutoCloseConnection = true,
+            //        InitKeyType = InitKeyType.Attribute,
+            //    });
+
+            //    webapi.Tools.DbFirstGenerator.Generate(db);
+            //    webapi.Tools.PermissionScanner.GeneratePermissions(db);
+            //}
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>

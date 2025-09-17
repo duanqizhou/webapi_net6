@@ -21,12 +21,6 @@ E:\vsCursor\webapi\webapi\obj\Debug\net6.0\scopedcss\bundle\webapi.styles.css
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.build.json
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.development.json
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.build.endpoints.json
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets\msbuild.webapi.Microsoft.AspNetCore.StaticWebAssets.props
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets\msbuild.webapi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets\msbuild.build.webapi.props
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.webapi.props
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.webapi.props
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.pack.json
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\webapi.csproj.Up2Date
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\webapi.dll
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\refint\webapi.dll
@@ -128,4 +122,8 @@ E:\vsCursor\webapi\webapi\bin\Debug\net6.0\Mapster.Core.dll
 E:\vsCursor\webapi\webapi\obj\Debug\net6.0\webapi.sourcelink.json
 E:\vsCursor\webapi\webapi\bin\Debug\net6.0\web.config
 E:\vsCursor\webapi\webapi\bin\Debug\net6.0\BCrypt.Net-Next.dll
-E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
+E:\vsCursor\webapi\webapi\obj\Debug\net6.0\rpswa.dswa.cache.json
+E:\vsCursor\webapi\webapi\obj\Debug\net6.0\rjimswa.dswa.cache.json
+E:\vsCursor\webapi\webapi\obj\Debug\net6.0\rjsmrazor.dswa.cache.json
+E:\vsCursor\webapi\webapi\obj\Debug\net6.0\rjsmcshtml.dswa.cache.json
+E:\vsCursor\webapi\webapi\obj\Debug\net6.0\staticwebassets.build.json.cache
