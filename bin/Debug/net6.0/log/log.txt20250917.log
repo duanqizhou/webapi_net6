@@ -1,0 +1,2 @@
+2025-09-17 18:11:07,391 [15] INFO  webapi.Common.CacheService - 缓存未命中，正在加载数据: DEPARTMENT
+2025-09-17 18:11:07,471 [15] INFO  webapi.Common.CacheService - 缓存未命中，正在加载数据: EMPLOYEE
