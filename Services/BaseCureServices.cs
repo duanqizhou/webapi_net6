@@ -69,33 +69,27 @@ public class BaseCureServices : IBaseCureServices
         return _repo.GetSingle(predicate);
     }
 
-    public async Task<(List<Consulting> List, int Total)> GetCureAsyncTotal(CureLibDto dto)
+    public async Task<(List<Consulting> List, int Total)> GetCureAsyncTotal(CureLibListDto dto)
     {
         RefAsync<int> total = 0;
+
+        Expression<Func<Consulting, bool>> whereExpression = u =>
+            (string.IsNullOrEmpty(dto.name) || u.Name.Contains(dto.name))
+            && (string.IsNullOrEmpty(dto.code) || u.GuoJiaBianMa.Contains(dto.code));
 
         var list = await _repo.GetPagedAsync(
             dto.CurrentPage,
             dto.Size,
-            u => string.IsNullOrEmpty(dto.name) || u.Name.Contains(dto.name)
-            && (string.IsNullOrEmpty(dto.code) || u.Code.Contains(dto.code)),
+            whereExpression,
             total
         );
 
         return (list, total);
     }
 
-    public Task<bool> AddAsync(Consulting entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<bool> AddAsync(Consulting entity) => _repo.AddAsync(entity);
 
-    public Task<bool> UpdateAsync(Consulting entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<bool> UpdateAsync(Consulting entity) => _repo.UpdateAsync(entity);
 
-    public Task<bool> DeleteAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<bool> DeleteAsync(int id) => _repo.DeleteAsync(id);
 }

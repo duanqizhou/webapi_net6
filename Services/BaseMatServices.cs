@@ -69,18 +69,20 @@ public class BaseMatServices : IBaseMatServices
         return _repo.GetSingle(predicate);
     }
 
-    public async Task<(List<MedicalMaterial> List, int Total)> GetMatAsyncTotal(MatLibDto dto)
+    public async Task<(List<MedicalMaterial> List, int Total)> GetMatAsyncTotal(MatLibListDto dto)
     {
         RefAsync<int> total = 0;
+        
+        Expression<Func<MedicalMaterial, bool>> whereExpression = u =>
+            (string.IsNullOrEmpty(dto.name) || u.Name.Contains(dto.name))
+            && (string.IsNullOrEmpty(dto.code) || u.SystemCode.Contains(dto.code));
 
         var list = await _repo.GetPagedAsync(
             dto.CurrentPage,
             dto.Size,
-            u => string.IsNullOrEmpty(dto.name) || u.Name.Contains(dto.name)
-            && (string.IsNullOrEmpty(dto.code) || u.MedicalCode.Contains(dto.code)),
+            whereExpression,
             total
         );
-
         return (list, total);
     }
 

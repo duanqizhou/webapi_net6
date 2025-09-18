@@ -83,19 +83,19 @@ namespace webapi
             builder.Services.AddSwaggerGen();
 
             //当前是开发环境
-            //if (builder.Environment.IsDevelopment())
-            //{
-            //    var db = new SqlSugarScope(new ConnectionConfig
-            //    {
-            //        ConnectionString = builder.Configuration.GetConnectionString("Default"),
-            //        DbType = DbType.SqlServer,
-            //        IsAutoCloseConnection = true,
-            //        InitKeyType = InitKeyType.Attribute,
-            //    });
+            if (builder.Environment.IsDevelopment())
+            {
+               var db = new SqlSugarScope(new ConnectionConfig
+               {
+                   ConnectionString = builder.Configuration.GetConnectionString("Default"),
+                   DbType = DbType.SqlServer,
+                   IsAutoCloseConnection = true,
+                   InitKeyType = InitKeyType.Attribute,
+               });
 
-            //    webapi.Tools.DbFirstGenerator.Generate(db);
-            //    webapi.Tools.PermissionScanner.GeneratePermissions(db);
-            //}
+               webapi.Tools.DbFirstGenerator.Generate(db);
+               webapi.Tools.PermissionScanner.GeneratePermissions(db);
+            }
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>

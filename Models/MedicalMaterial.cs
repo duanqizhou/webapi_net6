@@ -20,6 +20,7 @@ namespace webapi.Models
            /// Default:
            /// Nullable:False
            /// </summary>           
+           [SugarColumn(IsPrimaryKey=true)]
            public int ID {get;set;}
 
            /// <summary>

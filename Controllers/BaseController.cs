@@ -96,7 +96,7 @@ namespace webapi.Controllers
 
         #region 治疗
         [HttpGet("tablesCures")]
-        public async Task<IActionResult> GetTablesCures([FromQuery] CureLibDto dto)
+        public async Task<IActionResult> GetTablesCures([FromQuery] CureLibListDto dto)
         {
             var (list, totalCount) = await _baseCureServices.GetCureAsyncTotal(dto);
             return Ok(ApiResponse.Ok(new
@@ -105,17 +105,53 @@ namespace webapi.Controllers
                 list = list
             }));
         }
+
+        [HttpPut("tablesCures")]
+        public async Task<IActionResult> UpdateCures([FromBody] CureLibDto dto)
+        {
+            try
+            {
+                var cure = _baseCureServices.GetById(dto.ID);
+                if (cure == null)
+                    return NotFound(ApiResponse.Fail("项目不存在"));
+                dto.Adapt(cure);
+                var result = await _baseCureServices.UpdateAsync(cure);
+                return result ? Ok(ApiResponse.Ok("修改成功")) : Ok(ApiResponse.Error("修改失败"));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse.Error("异常：" + ex.Message));
+            }
+        }
         #endregion
         #region 耗材、材料
-        [HttpGet("TablesMats")]
-        public async Task<IActionResult> GetTablesMats([FromQuery] MatLibDto dto)
+        [HttpGet("tablesMats")]
+        public async Task<IActionResult> GetTablesMats([FromQuery] MatLibListDto dto)
         {
             var (list, totalCount) = await _baseMatServices.GetMatAsyncTotal(dto);
             return Ok(ApiResponse.Ok(new
             {
                 total = totalCount,
                 list = list
-            }));
+            })); 
+        }
+
+        [HttpPut("tablesMats")]
+        public async Task<IActionResult> UpdateMats([FromBody] MatLibDto dto)
+        {
+            try
+            {
+                var Mat = _baseMatServices.GetById(dto.ID);
+                if (Mat == null)
+                    return NotFound(ApiResponse.Fail("项目不存在"));
+                dto.Adapt(Mat);
+                var result = await _baseMatServices.UpdateAsync(Mat);
+                return result ? Ok(ApiResponse.Ok("修改成功")) : Ok(ApiResponse.Error("修改失败"));
+            }
+            catch (Exception ex)
+            {
+                return Ok(ApiResponse.Error("异常：" + ex.Message));
+            }
         }
         #endregion
 
