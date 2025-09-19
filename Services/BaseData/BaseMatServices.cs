@@ -10,11 +10,11 @@ public class BaseMatServices : IBaseMatServices
 {
     private readonly IBaseRepository<MedicalMaterial> _repo;
 
-    private readonly ISqlSugarClient _db;
-    public BaseMatServices(IBaseRepository<MedicalMaterial> repo, ISqlSugarClient db)
+    private readonly SqlSugarScope _scope; // ✅ 多库支持
+    public BaseMatServices(IBaseRepository<MedicalMaterial> repo, SqlSugarScope scope)
     {
         _repo = repo;
-        _db = db;
+        _scope = scope;
     }
 
     public List<MedicalMaterial> GetAll() => _repo.GetAll();

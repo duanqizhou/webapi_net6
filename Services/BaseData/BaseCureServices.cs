@@ -10,11 +10,12 @@ public class BaseCureServices : IBaseCureServices
 {
     private readonly IBaseRepository<Consulting> _repo;
 
-    private readonly ISqlSugarClient _db;
-    public BaseCureServices(IBaseRepository<Consulting> repo, ISqlSugarClient db)
+    private readonly SqlSugarScope _scope; // ✅ 多库支持
+
+    public BaseCureServices(IBaseRepository<Consulting> repo, SqlSugarScope scope)
     {
         _repo = repo;
-        _db = db;
+        _scope = scope ?? throw new ArgumentNullException(nameof(scope));
     }
 
     public List<Consulting> GetAll() => _repo.GetAll();

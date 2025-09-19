@@ -94,7 +94,6 @@ namespace webapi.Controllers
         }
 
         #endregion
-
         #region 治疗
         [HttpGet("tablesCures")]
         public async Task<IActionResult> GetTablesCures([FromQuery] CureLibListDto dto)

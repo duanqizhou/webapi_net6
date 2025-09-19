@@ -7,15 +7,15 @@ using webapi.Models.BaseData;
 
 public class PermissionFilter : IAsyncActionFilter
 {
-    private readonly ISqlSugarClient _db;
+    private readonly SqlSugarScope _db;
 
-    public PermissionFilter(ISqlSugarClient db)
+    public PermissionFilter(SqlSugarScope db)
     {
         _db = db;
     }
-
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
+         var dbConn = _db.GetConnectionScope("BaseData");
          var endpoint = context.HttpContext.GetEndpoint();
         if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
         {
@@ -33,7 +33,7 @@ public class PermissionFilter : IAsyncActionFilter
         var routePattern = "/" + (endpoint as Microsoft.AspNetCore.Routing.RouteEndpoint)?.RoutePattern?.RawText;
         var method = context.HttpContext.Request.Method;
 
-        var hasPermission = await _db.Queryable<Permissions>() 
+        var hasPermission = await dbConn.Queryable<Permissions>() 
             .Where(p=>p.Url == routePattern)
             .AnyAsync();
         Console.WriteLine("hasPermission��" + hasPermission.ToString());

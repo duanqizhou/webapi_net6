@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using webapi.Common;
 using webapi.Models.BaseData;
 using webapi.Dtos;
+using webapi.Services.Lis;
 
 namespace webapi.Controllers
 {
@@ -11,8 +12,11 @@ namespace webapi.Controllers
     [Route("api/[controller]")]
     public class TestController : ControllerBase
     {
-        public TestController()
+        private readonly IWwfPersonServices _wwfPersonServices;
+
+        public TestController(IWwfPersonServices wwfPersonServices)
         {
+            _wwfPersonServices = wwfPersonServices;
         }
         [HttpGet("GetAll")]
         public IActionResult GetAll()
@@ -26,5 +30,13 @@ namespace webapi.Controllers
             return Ok(ApiResponse.Ok("Test Create successful"));
         }
 
+        [AllowAnonymous]
+        [HttpPost("Lislogin")]
+        public IActionResult Lislogin([FromBody] WwfPersonDto testDto)
+        {
+            var aa = _wwfPersonServices.GetAll("LIS");
+            var pas = Password.Encrypt(testDto.fpass);
+            return Ok(ApiResponse.Ok("Test Create successful"));
+        }
     }
 }

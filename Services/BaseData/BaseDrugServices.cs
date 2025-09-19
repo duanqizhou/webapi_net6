@@ -10,11 +10,12 @@ public class BaseDrugServices : IBaseDrugServices
 {
     private readonly IBaseRepository<DM_DICT> _repo;
 
-    private readonly ISqlSugarClient _db;
-    public BaseDrugServices(IBaseRepository<DM_DICT> repo, ISqlSugarClient db)
+    private readonly SqlSugarScope _scope; // ✅ 多库支持
+
+    public BaseDrugServices(IBaseRepository<DM_DICT> repo, SqlSugarScope scope)
     {
         _repo = repo;
-        _db = db;
+        _scope = scope;
     }
     public async Task<int> GetMaxCode()
     {
@@ -23,7 +24,7 @@ public class BaseDrugServices : IBaseDrugServices
         var sugarTable = (SugarTable)Attribute.GetCustomAttribute(entityType, typeof(SugarTable));
         var tableName = sugarTable?.TableName ?? entityType.Name; 
         var itemkey = tableName;
-        return await _db.Ado.GetIntAsync(
+        return await _scope.GetConnectionScope("BaseData").Ado.GetIntAsync(
             "exec [His].GetIdentityValue @itemkey=@itemkey,@orgcode=@orgcode",
             new { itemkey, orgcode }
         );

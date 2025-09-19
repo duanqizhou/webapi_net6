@@ -216,7 +216,6 @@ namespace webapi.Controllers
         }
 
 
-
         [HttpDelete("TablesUsers/{loginid}")]
         public async Task<IActionResult> DeleteUser(string loginid)
         {

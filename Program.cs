@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using webapi.Common;
+using webapi.Services.Lis;
+using webapi.Models.LIS;
 namespace webapi
 {
     public class Program
@@ -54,30 +56,22 @@ namespace webapi
             {
                 options.Filters.Add<PermissionFilter>(); // 全局权限过滤器
             });
-            builder.Services.AddSingleton<ISqlSugarClient>(sp =>
+            builder.Services.AddSingleton<SqlSugarScope>(sp =>
             {
                 var configs = new List<ConnectionConfig>
                 {
-                    new ConnectionConfig
-                    {
-                        ConfigId = "BaseData",   // 标识符
-                        ConnectionString = builder.Configuration.GetConnectionString("Default"),
-                        DbType = DbType.SqlServer,
-                        IsAutoCloseConnection = true,
-                        InitKeyType = InitKeyType.Attribute,
-                    },
-                    new ConnectionConfig
-                    {
-                        ConfigId = "LIS",       // 标识符
-                        ConnectionString = builder.Configuration.GetConnectionString("LIS"),
-                        DbType = DbType.SqlServer,
-                        IsAutoCloseConnection = true,
-                        InitKeyType = InitKeyType.Attribute,
-                    }
+        new ConnectionConfig { ConfigId = "BaseData", ConnectionString = builder.Configuration.GetConnectionString("Default"), DbType = DbType.SqlServer, IsAutoCloseConnection = true, InitKeyType = InitKeyType.Attribute },
+        new ConnectionConfig { ConfigId = "LIS", ConnectionString = builder.Configuration.GetConnectionString("LIS"), DbType = DbType.SqlServer, IsAutoCloseConnection = true, InitKeyType = InitKeyType.Attribute }
                 };
-
                 return new SqlSugarScope(configs);
             });
+            builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddSingleton<Func<string, ISqlSugarClient>>(sp =>
+            {
+                var scope = sp.GetRequiredService<SqlSugarScope>();
+                return dbName => scope.GetConnectionScope(dbName);
+            });
+
             builder.Services.AddScoped<SqlSugarTransactionHelper>();
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddScoped<Common.ICacheService, CacheService>();
@@ -90,6 +84,9 @@ namespace webapi
             builder.Services.AddScoped<IBaseDrugServices, BaseDrugServices>();
             builder.Services.AddScoped<IBaseCureServices, BaseCureServices>();
             builder.Services.AddScoped<IBaseMatServices, BaseMatServices>();
+
+            builder.Services.AddScoped<IWwfPersonServices, WwfPersonServices>();
+
 
 
             builder.Services.AddEndpointsApiExplorer();
