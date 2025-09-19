@@ -1,6 +1,6 @@
 using SqlSugar;
 using System.Linq.Expressions;
-using webapi.Models;
+using webapi.Models.BaseData;
 using webapi.Repository;
 
 namespace webapi.Services;

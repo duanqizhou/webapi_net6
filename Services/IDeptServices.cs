@@ -1,4 +1,4 @@
-using webapi.Models;
+using webapi.Models.BaseData;
 
 namespace webapi.Services;
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace webapi.Models
+namespace webapi.Dtos
 {
     #region 三大库
     #region 药品

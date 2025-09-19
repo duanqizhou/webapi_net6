@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using webapi.Models;
+using webapi.Models.BaseData;
 using System.Collections.Generic;
 using System;
 using webapi.Services;

@@ -56,14 +56,27 @@ namespace webapi
             });
             builder.Services.AddSingleton<ISqlSugarClient>(sp =>
             {
-                var config = new ConnectionConfig
+                var configs = new List<ConnectionConfig>
                 {
-                    ConnectionString = builder.Configuration.GetConnectionString("Default"),
-                    DbType = DbType.SqlServer,
-                    IsAutoCloseConnection = true, 
-                    InitKeyType = InitKeyType.Attribute,
+                    new ConnectionConfig
+                    {
+                        ConfigId = "BaseData",   // 标识符
+                        ConnectionString = builder.Configuration.GetConnectionString("Default"),
+                        DbType = DbType.SqlServer,
+                        IsAutoCloseConnection = true,
+                        InitKeyType = InitKeyType.Attribute,
+                    },
+                    new ConnectionConfig
+                    {
+                        ConfigId = "LIS",       // 标识符
+                        ConnectionString = builder.Configuration.GetConnectionString("LIS"),
+                        DbType = DbType.SqlServer,
+                        IsAutoCloseConnection = true,
+                        InitKeyType = InitKeyType.Attribute,
+                    }
                 };
-                return new SqlSugarScope(config); 
+
+                return new SqlSugarScope(configs);
             });
             builder.Services.AddScoped<SqlSugarTransactionHelper>();
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -85,17 +98,32 @@ namespace webapi
             //当前是开发环境
             if (builder.Environment.IsDevelopment())
             {
-               var db = new SqlSugarScope(new ConnectionConfig
-               {
-                   ConnectionString = builder.Configuration.GetConnectionString("Default"),
-                   DbType = DbType.SqlServer,
-                   IsAutoCloseConnection = true,
-                   InitKeyType = InitKeyType.Attribute,
-               });
+                var configs = new List<ConnectionConfig>
+                {
+                    new ConnectionConfig
+                    {
+                        ConfigId = "BaseData",
+                        ConnectionString = builder.Configuration.GetConnectionString("Default"),
+                        DbType = DbType.SqlServer,
+                        IsAutoCloseConnection = true,
+                        InitKeyType = InitKeyType.Attribute
+                    },
+                    new ConnectionConfig
+                    {
+                        ConfigId = "LIS",
+                        ConnectionString = builder.Configuration.GetConnectionString("LIS"),
+                        DbType = DbType.SqlServer,
+                        IsAutoCloseConnection = true,
+                        InitKeyType = InitKeyType.Attribute
+                    }
+                };
 
-               webapi.Tools.DbFirstGenerator.Generate(db);
-               webapi.Tools.PermissionScanner.GeneratePermissions(db);
+                var db = new SqlSugarScope(configs);
+
+                webapi.Tools.DbFirstGenerator.Generate(db); // ✅ 一次性生成两个库的实体
+                webapi.Tools.PermissionScanner.GeneratePermissions(db.GetConnectionScope("BaseData"));
             }
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>

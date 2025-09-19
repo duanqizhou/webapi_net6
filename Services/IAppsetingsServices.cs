@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using webapi.Models;
+using webapi.Models.BaseData;
 
 namespace webapi.Services;
 

@@ -1,10 +1,11 @@
-using webapi.Models;
+using webapi.Models.BaseData;
+using webapi.Dtos;
 
 namespace webapi.Services;
 
 public interface IUserServices : IBaseServices<ACCOUNTS>
 {
     Task<(List<ACCOUNTS> List, int Total)> GetUsersAsyncTotal(UserQueryDto dto);
-    //获取当前最大的登录ID
+    //鑾峰彇褰撳墠鐢ㄦ埛鐨勭櫥褰旾D
     Task<int> GetMaxLoginIdAsync();
 }

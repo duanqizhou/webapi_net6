@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SqlSugar;
-using webapi.Models;
+using webapi.Models.BaseData;
 
 public class PermissionFilter : IAsyncActionFilter
 {
@@ -36,7 +36,7 @@ public class PermissionFilter : IAsyncActionFilter
         var hasPermission = await _db.Queryable<Permissions>() 
             .Where(p=>p.Url == routePattern)
             .AnyAsync();
-        Console.WriteLine("hasPermission£º" + hasPermission.ToString());
+        Console.WriteLine("hasPermissionï¿½ï¿½" + hasPermission.ToString());
 
         if (!hasPermission)
         {

@@ -1,5 +1,5 @@
-using webapi.Models;
-
+using webapi.Models.BaseData;
+using webapi.Dtos;
 namespace webapi.Services;
 
 public interface IBaseDrugServices : IBaseServices<DM_DICT>

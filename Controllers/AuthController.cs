@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using webapi.Common;
-using webapi.Models;
+using webapi.Models.BaseData;
+using webapi.Dtos;
 using webapi.Services;
 using Mapster;
 using Microsoft.Extensions.Options;

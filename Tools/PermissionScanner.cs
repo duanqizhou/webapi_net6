@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
-using webapi.Models;
+using webapi.Models.BaseData;
 using System.ComponentModel;
 
 namespace webapi.Tools

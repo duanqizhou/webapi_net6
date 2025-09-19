@@ -4,13 +4,20 @@ namespace webapi.Tools;
 
 public class DbFirstGenerator
 {
-    public static void Generate(ISqlSugarClient db)
+    public static void Generate(SqlSugarScope db)
     {
-        db.DbFirst
-          .IsCreateAttribute(true) // 添加特性标记
-          //.Where("User", "Order") // 可选：只生成指定表
-          .CreateClassFile("Models", "webapi.Models");
+        // BaseData 库的实体
+        var baseDataDb = db.GetConnectionScope("BaseData");
+        baseDataDb.DbFirst
+            .IsCreateAttribute(true)
+            .CreateClassFile("Models/BaseData", "webapi.Models.BaseData");
 
-        Console.WriteLine("✅ 实体类已生成！");
+        // LIS 库的实体
+        var lisDb = db.GetConnectionScope("LIS");
+        lisDb.DbFirst
+            .IsCreateAttribute(true)
+            .CreateClassFile("Models/LIS", "webapi.Models.LIS");
+
+        Console.WriteLine("✅ 实体类已生成到 Models/BaseData 和 Models/LIS 文件夹！");
     }
 }

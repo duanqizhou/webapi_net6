@@ -2,7 +2,8 @@ using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapi.Common;
-using webapi.Models;
+using webapi.Models.BaseData;
+using webapi.Dtos;
 
 namespace webapi.Controllers
 {

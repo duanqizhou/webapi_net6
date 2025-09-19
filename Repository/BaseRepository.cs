@@ -1,5 +1,5 @@
 using webapi.Repository;
-using webapi.Models;
+using webapi.Models.BaseData;
 using webapi.Services;
 using SqlSugar;
 using System.Linq.Expressions;
@@ -18,9 +18,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     public List<T> GetAll() => _db.Queryable<T>().ToList();
     public List<T> GetList(Expression<Func<T, bool>> predicate) => _db.Queryable<T>().Where(predicate).ToList();
 
-    public T GetSingle(Expression<Func<T, bool>> predicate) => _db.Queryable<T>().Where(predicate).First(); //ÁªºÏÖ÷¼ü²éÑ¯
-    public T GetById(int id) => _db.Queryable<T>().InSingle(id); //µ¥Ö÷¼ü²éÑ¯
-    public T GetById(string id) => _db.Queryable<T>().InSingle(id); //µ¥Ö÷¼ü²éÑ¯
+    public T GetSingle(Expression<Func<T, bool>> predicate) => _db.Queryable<T>().Where(predicate).First(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯
+    public T GetById(int id) => _db.Queryable<T>().InSingle(id); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯
+    public T GetById(string id) => _db.Queryable<T>().InSingle(id); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯
 
 
 
@@ -41,7 +41,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     public int DeleteRange(List<int> ids) => _db.Deleteable<T>().In(ids).ExecuteCommand();
     public async Task<bool> DeleteRangeAsync(List<int> ids) => await _db.Deleteable<T>().In(ids).ExecuteCommandAsync() > 0;
     /// <summary>
-    /// ·ÖÒ³²éÑ¯
+    /// ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯
     /// </summary>
     public async Task<List<T>> GetPagedAsync(int page, int size, Expression<Func<T, bool>>? whereExpression, RefAsync<int> totalCount)
     {
@@ -56,14 +56,14 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     }
 
     /// <summary>
-    /// »ñÈ¡µ¥¸ö¶ÔÏó
+    /// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
     {
         return await _db.Queryable<T>().FirstAsync(predicate);
     }
     /// <summary>
-    /// »ñÈ¡¹ýÂË¶ÔÏó
+    /// ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½
     /// </summary>
     public async Task<List<T>> GetListExpressionAsync(Expression<Func<T, bool>> predicate = null)
     {
@@ -71,7 +71,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
         return await query.ToListAsync();
     }
     /// <summary>
-    /// ÅÐ¶ÏÊÇ·ñ´æÔÚ
+    /// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
     {

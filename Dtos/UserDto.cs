@@ -1,6 +1,6 @@
 using System;
 
-namespace webapi.Models
+namespace webapi.Dtos
 {
     public class UserDto
     {
