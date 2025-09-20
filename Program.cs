@@ -60,7 +60,7 @@ namespace webapi
             {
                 var configs = new List<ConnectionConfig>
                 {
-        new ConnectionConfig { ConfigId = "BaseData", ConnectionString = builder.Configuration.GetConnectionString("Default"), DbType = DbType.SqlServer, IsAutoCloseConnection = true, InitKeyType = InitKeyType.Attribute },
+        new ConnectionConfig { ConfigId = "BaseData", ConnectionString = builder.Configuration.GetConnectionString("BaseData"), DbType = DbType.SqlServer, IsAutoCloseConnection = true, InitKeyType = InitKeyType.Attribute },
         new ConnectionConfig { ConfigId = "LIS", ConnectionString = builder.Configuration.GetConnectionString("LIS"), DbType = DbType.SqlServer, IsAutoCloseConnection = true, InitKeyType = InitKeyType.Attribute }
                 };
                 return new SqlSugarScope(configs);
@@ -100,7 +100,7 @@ namespace webapi
                     new ConnectionConfig
                     {
                         ConfigId = "BaseData",
-                        ConnectionString = builder.Configuration.GetConnectionString("Default"),
+                        ConnectionString = builder.Configuration.GetConnectionString("BaseData"),
                         DbType = DbType.SqlServer,
                         IsAutoCloseConnection = true,
                         InitKeyType = InitKeyType.Attribute

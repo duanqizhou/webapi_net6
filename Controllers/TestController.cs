@@ -13,10 +13,11 @@ namespace webapi.Controllers
     public class TestController : ControllerBase
     {
         private readonly IWwfPersonServices _wwfPersonServices;
-
-        public TestController(IWwfPersonServices wwfPersonServices)
+        private readonly string _lisDbName;
+        public TestController(IWwfPersonServices wwfPersonServices, IConfiguration configuration)
         {
             _wwfPersonServices = wwfPersonServices;
+            _lisDbName = configuration["DbNames:Lis"]; // 读取配置
         }
         [HttpGet("GetAll")]
         public IActionResult GetAll()
@@ -34,9 +35,9 @@ namespace webapi.Controllers
         [HttpPost("Lislogin")]
         public IActionResult Lislogin([FromBody] WwfPersonDto testDto)
         {
-            var aa = _wwfPersonServices.GetAll("LIS");
+            var aa = _wwfPersonServices.GetAll(_lisDbName);
             var pas = Password.Encrypt(testDto.fpass);
-            return Ok(ApiResponse.Ok("Test Create successful"));
+            return Ok(ApiResponse.Ok("Test Create successful ++ " + aa.Count));
         }
     }
 }
