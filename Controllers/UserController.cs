@@ -11,6 +11,7 @@ using webapi.Dtos;
 using webapi.Repository;
 using webapi.Services;
 using ICacheService = webapi.Common.ICacheService;
+using Dm.util;
 
 namespace webapi.Controllers
 {
@@ -55,21 +56,27 @@ namespace webapi.Controllers
             // 从 JWT 中获取用户 ID
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             var userNameClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var roles = new List<string> { "ADMIN" }; // 这里可以替换成实际的角色列表
 
             if (userIdClaim == null || userNameClaim == null)
             {
                 return Unauthorized(ApiResponse.Error("无法识别用户", 401));
             }
 
-            int userId = int.Parse(userIdClaim.Value);
+            string userIdStr = Convert.ToString(userIdClaim.Value);
             string userName = Convert.ToString(userNameClaim.Value);
+
+            if (!int.TryParse(userIdClaim.Value, out var result))
+                roles.add("LIS");
+            else
+                roles.add("HIS");
 
             // 获取角色名称列表
 
             return Ok(ApiResponse.Ok(new
             {
                 username = userName,
-                roles = new List<string> { "ADMIN" }, // 这里可以替换成实际的角色列表
+                roles
             }));
         }
 

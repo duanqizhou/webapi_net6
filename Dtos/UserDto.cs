@@ -12,9 +12,10 @@ namespace webapi.Dtos
         public string Phone { get; set; }
     }
 
+
     public class LoginUserDto
     {
-
+        public SysEnum Sys { get; set; }
         public string EMPID { get; set; }
         public string Password { get; set; }
         //验证码

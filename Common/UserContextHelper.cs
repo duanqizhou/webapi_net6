@@ -7,9 +7,9 @@ namespace webapi.Common
         public static int? GetCurrentUserId(ClaimsPrincipal user)
         {
             var userIdClaim = user?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId))
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out var userIdStr))
             {
-                return userId;
+                return userIdStr;
             }
             return null;
         }

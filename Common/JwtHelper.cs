@@ -17,11 +17,11 @@ public class JwtHelper
         _settings = settings.Value;
     }
 
-    public string GenerateToken(string userId, string username)
+    public string GenerateToken(string userIdStr, string username)
     {
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(ClaimTypes.NameIdentifier, userIdStr),
             new Claim(ClaimTypes.Name, username)
         };
 

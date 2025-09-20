@@ -93,33 +93,33 @@ namespace webapi
             builder.Services.AddSwaggerGen();
 
             //当前是开发环境
-            if (builder.Environment.IsDevelopment())
-            {
-                var configs = new List<ConnectionConfig>
-                {
-                    new ConnectionConfig
-                    {
-                        ConfigId = "BaseData",
-                        ConnectionString = builder.Configuration.GetConnectionString("BaseData"),
-                        DbType = DbType.SqlServer,
-                        IsAutoCloseConnection = true,
-                        InitKeyType = InitKeyType.Attribute
-                    },
-                    new ConnectionConfig
-                    {
-                        ConfigId = "LIS",
-                        ConnectionString = builder.Configuration.GetConnectionString("LIS"),
-                        DbType = DbType.SqlServer,
-                        IsAutoCloseConnection = true,
-                        InitKeyType = InitKeyType.Attribute
-                    }
-                };
+            // if (builder.Environment.IsDevelopment())
+            // {
+            //     var configs = new List<ConnectionConfig>
+            //     {
+            //         new ConnectionConfig
+            //         {
+            //             ConfigId = "BaseData",
+            //             ConnectionString = builder.Configuration.GetConnectionString("BaseData"),
+            //             DbType = DbType.SqlServer,
+            //             IsAutoCloseConnection = true,
+            //             InitKeyType = InitKeyType.Attribute
+            //         },
+            //         new ConnectionConfig
+            //         {
+            //             ConfigId = "LIS",
+            //             ConnectionString = builder.Configuration.GetConnectionString("LIS"),
+            //             DbType = DbType.SqlServer,
+            //             IsAutoCloseConnection = true,
+            //             InitKeyType = InitKeyType.Attribute
+            //         }
+            //     };
 
-                var db = new SqlSugarScope(configs);
+            //     var db = new SqlSugarScope(configs);
 
-                webapi.Tools.DbFirstGenerator.Generate(db); // ✅ 一次性生成两个库的实体
-                webapi.Tools.PermissionScanner.GeneratePermissions(db.GetConnectionScope("BaseData"));
-            }
+            //     webapi.Tools.DbFirstGenerator.Generate(db); // ✅ 一次性生成两个库的实体
+            //     webapi.Tools.PermissionScanner.GeneratePermissions(db.GetConnectionScope("BaseData"));
+            // }
 
             builder.Services.AddCors(options =>
             {

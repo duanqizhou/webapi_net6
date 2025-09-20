@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Dm.util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -23,7 +24,7 @@ public class PermissionFilter : IAsyncActionFilter
             return;
         }
         var userIdStr = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (!int.TryParse(userIdStr, out var userId))
+        if (string.IsNullOrWhiteSpace(userIdStr.toString()))
         {
             context.Result = new UnauthorizedResult();
             return;

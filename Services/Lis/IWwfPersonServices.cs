@@ -7,5 +7,5 @@ public interface IWwfPersonServices
 {
     Task<WWF_PERSON> BllUserPassOk(string fperson_id, string fpass);
     public List<WWF_PERSON> GetAll(string dbName);
-    
+    WWF_PERSON GetById(string id,string DbName);
 }
