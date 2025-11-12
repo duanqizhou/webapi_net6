@@ -11,6 +11,7 @@
           "BCrypt.Net-Next": "4.0.3",
           "Mapster": "7.4.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.25",
+          "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
           "SqlSugarCore": "5.1.4.196",
           "Swashbuckle.AspNetCore": "6.5.0",
           "log4net": "3.1.0"
@@ -111,6 +112,7 @@
           }
         }
       },
+      "Microsoft.CodeAnalysis.Analyzers/3.11.0": {},
       "Microsoft.CSharp/4.5.0": {},
       "Microsoft.Data.SqlClient/5.2.2": {
         "dependencies": {
@@ -1017,6 +1019,13 @@
       "sha512": "sha512-yuvf07qFWFqtK3P/MRkEKLhn5r2UbSpVueRziSqj0yJQIKFwG1pq9mOayK3zE5qZCTs0CbrwL9M6R8VwqyGy2w==",
       "path": "microsoft.bcl.asyncinterfaces/1.1.1",
       "hashPath": "microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512"
+    },
+    "Microsoft.CodeAnalysis.Analyzers/3.11.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-v/EW3UE8/lbEYHoC2Qq7AR/DnmvpgdtAMndfQNmpuIMx/Mto8L5JnuCfdBYtgvalQOtfNCnxFejxuRrryvUTsg==",
+      "path": "microsoft.codeanalysis.analyzers/3.11.0",
+      "hashPath": "microsoft.codeanalysis.analyzers.3.11.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.5.0": {
       "type": "package",

@@ -32,5 +32,22 @@ namespace webapi.Controllers
         {
             return Ok(ApiResponse.Ok(_cacheService.GetAppsettings()));
         }
+
+        [HttpGet("wwfdept")]
+        public async Task<IActionResult> GetWwfDept()
+        {
+            return Ok(ApiResponse.Ok(_cacheService.GetWwfDept()));
+        }
+        [HttpGet("wwfperson")]
+        public async Task<IActionResult> GetWwfPerson()
+        {
+            return Ok(ApiResponse.Ok(_cacheService.GetWwfPerson()));
+        }
+        [HttpGet("wwfsys")]
+        public async Task<IActionResult> GetWwfSys()
+        {
+            return Ok(ApiResponse.Ok(_cacheService.GetWwfSys()));
+        }
+
     }
 }

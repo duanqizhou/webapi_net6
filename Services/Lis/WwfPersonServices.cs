@@ -1,4 +1,5 @@
 using SqlSugar;
+using webapi.Configs;
 using webapi.Dtos;
 using webapi.Models.LIS;
 using webapi.Repository;
@@ -15,6 +16,6 @@ public class WwfPersonServices : IWwfPersonServices
     }
     public Task<WWF_PERSON> BllUserPassOk(string fperson_id, string fpass) => _repo.FirstOrDefaultAsync(fd => fd.fpass == fpass && fd.fperson_id == fperson_id);
 
-    public List<WWF_PERSON> GetAll(string DbName) => _repo.GetAll(DbName);
+    public List<WWF_PERSON> GetAll() => _repo.GetAll(Db_LIS.Name);
     WWF_PERSON IWwfPersonServices.GetById(string id, string DbName) => _repo.GetById(id,DbName);
 }

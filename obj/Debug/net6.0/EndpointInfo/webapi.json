@@ -102,6 +102,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "ClassifyCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -169,7 +176,7 @@
         }
       }
     },
-    "/api/base/TablesCures": {
+    "/api/base/tablesCures": {
       "get": {
         "tags": [
           "Base"
@@ -192,7 +199,14 @@
             }
           },
           {
-            "name": "cname",
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
             "in": "query",
             "schema": {
               "type": "string"
@@ -204,9 +218,38 @@
             "description": "Success"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Base"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CureLibDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CureLibDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CureLibDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
-    "/api/base/TablesMats": {
+    "/api/base/tablesMats": {
       "get": {
         "tags": [
           "Base"
@@ -229,13 +272,49 @@
             }
           },
           {
-            "name": "cname",
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
             "in": "query",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Base"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatLibDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatLibDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatLibDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -279,6 +358,338 @@
         }
       }
     },
+    "/api/common/wwfdept": {
+      "get": {
+        "tags": [
+          "Common"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/common/wwfperson": {
+      "get": {
+        "tags": [
+          "Common"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/common/wwfsys": {
+      "get": {
+        "tags": [
+          "Common"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/SamInstr": {
+      "get": {
+        "tags": [
+          "Lis"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/SamItem": {
+      "get": {
+        "tags": [
+          "Lis"
+        ],
+        "parameters": [
+          {
+            "name": "inster",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/dictionaries/sjxm": {
+      "get": {
+        "tags": [
+          "LisDictionaries"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/organizations/index": {
+      "get": {
+        "tags": [
+          "LisOrganizations"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/organizations/UserOrg/{personId}": {
+      "get": {
+        "tags": [
+          "LisOrganizations"
+        ],
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/organizations/SwitchSetting/{pid}": {
+      "get": {
+        "tags": [
+          "LisOrganizations"
+        ],
+        "parameters": [
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/organizations/SwitchSetting": {
+      "put": {
+        "tags": [
+          "LisOrganizations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixSwitchSetDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixSwitchSetDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MixSwitchSetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/index": {
+      "get": {
+        "tags": [
+          "LisSamples"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/SamApply": {
+      "get": {
+        "tags": [
+          "LisSamples"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/SamUrgentvalueprompt": {
+      "get": {
+        "tags": [
+          "LisSamples"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/SamUrgentvaluepromptInsertOrUpdate": {
+      "post": {
+        "tags": [
+          "LisSamples"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SamUrgentvaluepromptDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SamUrgentvaluepromptDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SamUrgentvaluepromptDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/SamSampleType": {
+      "get": {
+        "tags": [
+          "LisSamples"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/SamType": {
+      "post": {
+        "tags": [
+          "LisSamples"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/lis/sample/SamSampleItem": {
+      "get": {
+        "tags": [
+          "LisSamples"
+        ],
+        "parameters": [
+          {
+            "name": "CurrentPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SampleName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SampleCategory",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Test/GetAll": {
       "get": {
         "tags": [
@@ -311,6 +722,37 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/Lislogin": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WwfPersonDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WwfPersonDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WwfPersonDto"
               }
             }
           }
@@ -534,6 +976,70 @@
         },
         "additionalProperties": false
       },
+      "CureLibDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "spec": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "priceCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "classifyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestor": {
+            "type": "string",
+            "nullable": true
+          },
+          "requireDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "beizhu": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "guoJiaBianMa": {
+            "type": "string",
+            "nullable": true
+          },
+          "execDept": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DictLibDto": {
         "type": "object",
         "properties": {
@@ -613,6 +1119,9 @@
       "LoginUserDto": {
         "type": "object",
         "properties": {
+          "sys": {
+            "$ref": "#/components/schemas/SysEnum"
+          },
           "empid": {
             "type": "string",
             "nullable": true
@@ -628,6 +1137,101 @@
         },
         "additionalProperties": false
       },
+      "MatLibDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "systemCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "bigType": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "smallType": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "spec": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "dosageType": {
+            "type": "string",
+            "nullable": true
+          },
+          "incomeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestor": {
+            "type": "string",
+            "nullable": true
+          },
+          "requireDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "approveNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "sfbm": {
+            "type": "string",
+            "nullable": true
+          },
+          "shangchanhcangjia": {
+            "type": "string",
+            "nullable": true
+          },
+          "zflx": {
+            "type": "string",
+            "nullable": true
+          },
+          "beizhu": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MixSwitchSetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bname": {
+            "type": "string",
+            "nullable": true
+          },
+          "attributes": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "RefreshRequest": {
         "type": "object",
         "properties": {
@@ -637,6 +1241,44 @@
           }
         },
         "additionalProperties": false
+      },
+      "SamUrgentvaluepromptDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "finstr_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "fitem_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "fname": {
+            "type": "string",
+            "nullable": true
+          },
+          "urgentValueName": {
+            "type": "string",
+            "nullable": true
+          },
+          "urgentValueRef": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SysEnum": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "UpdateStatusUserDto": {
         "type": "object",
@@ -672,6 +1314,53 @@
             "nullable": true
           },
           "phone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WwfPersonDto": {
+        "type": "object",
+        "properties": {
+          "fperson_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "fdept_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "fname": {
+            "type": "string",
+            "nullable": true
+          },
+          "fname_e": {
+            "type": "string",
+            "nullable": true
+          },
+          "forder_by": {
+            "type": "string",
+            "nullable": true
+          },
+          "fuse_flag": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fremark": {
+            "type": "string",
+            "nullable": true
+          },
+          "ftype": {
+            "type": "string",
+            "nullable": true
+          },
+          "fhelp_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "fshow_name": {
             "type": "string",
             "nullable": true
           }

@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "req",
-        "Type": "webapi.Models.LoginUserDto",
+        "Type": "webapi.Dtos.LoginUserDto",
         "IsRequired": true
       }
     ],
@@ -34,7 +34,7 @@
   {
     "ContainingType": "webapi.Controllers.BaseController",
     "Method": "GetTablesCures",
-    "RelativePath": "api/base/TablesCures",
+    "RelativePath": "api/base/tablesCures",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -50,9 +50,30 @@
         "IsRequired": false
       },
       {
-        "Name": "cname",
+        "Name": "name",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.BaseController",
+    "Method": "UpdateCures",
+    "RelativePath": "api/base/tablesCures",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "webapi.Dtos.CureLibDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -84,6 +105,11 @@
         "Name": "ccode",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "ClassifyCode",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -98,7 +124,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "webapi.Models.DictLibDto",
+        "Type": "webapi.Dtos.DictLibDto",
         "IsRequired": true
       }
     ],
@@ -114,7 +140,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "webapi.Models.DictLibDto",
+        "Type": "webapi.Dtos.DictLibDto",
         "IsRequired": true
       }
     ],
@@ -123,7 +149,7 @@
   {
     "ContainingType": "webapi.Controllers.BaseController",
     "Method": "GetTablesMats",
-    "RelativePath": "api/base/TablesMats",
+    "RelativePath": "api/base/tablesMats",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -139,9 +165,30 @@
         "IsRequired": false
       },
       {
-        "Name": "cname",
+        "Name": "name",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.BaseController",
+    "Method": "UpdateMats",
+    "RelativePath": "api/base/tablesMats",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "webapi.Dtos.MatLibDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -177,6 +224,233 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "webapi.Controllers.CommonController",
+    "Method": "GetWwfDept",
+    "RelativePath": "api/common/wwfdept",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.CommonController",
+    "Method": "GetWwfPerson",
+    "RelativePath": "api/common/wwfperson",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.CommonController",
+    "Method": "GetWwfSys",
+    "RelativePath": "api/common/wwfsys",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisDictionariesController",
+    "Method": "Sjxm",
+    "RelativePath": "api/lis/dictionaries/sjxm",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisOrganizationsController",
+    "Method": "Index",
+    "RelativePath": "api/lis/organizations/index",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisOrganizationsController",
+    "Method": "UpdateSwitchSetting",
+    "RelativePath": "api/lis/organizations/SwitchSetting",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "switchSetDto",
+        "Type": "webapi.Dtos.Lis.MixSwitchSetDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisOrganizationsController",
+    "Method": "SwitchSetting",
+    "RelativePath": "api/lis/organizations/SwitchSetting/{pid}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisOrganizationsController",
+    "Method": "GetOrgInfo",
+    "RelativePath": "api/lis/organizations/UserOrg/{personId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "personId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisController",
+    "Method": "SamInstr",
+    "RelativePath": "api/lis/SamInstr",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisController",
+    "Method": "SamItem",
+    "RelativePath": "api/lis/SamItem",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "inster",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "Index",
+    "RelativePath": "api/lis/sample/index",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "SamApply",
+    "RelativePath": "api/lis/sample/SamApply",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "SamSampleItem",
+    "RelativePath": "api/lis/sample/SamSampleItem",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CurrentPage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Size",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SampleName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "SampleCategory",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "SamSampleType",
+    "RelativePath": "api/lis/sample/SamSampleType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "SamType",
+    "RelativePath": "api/lis/sample/SamType",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "types",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "SamUrgentvalueprompt",
+    "RelativePath": "api/lis/sample/SamUrgentvalueprompt",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.Lis.LisSamplesController",
+    "Method": "SamUrgentvaluepromptInsertOrUpdate",
+    "RelativePath": "api/lis/sample/SamUrgentvaluepromptInsertOrUpdate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "samUrgentvaluepromptDto",
+        "Type": "webapi.Dtos.Lis.SamUrgentvaluepromptDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "webapi.Controllers.TestController",
     "Method": "Create",
     "RelativePath": "api/Test/Create",
@@ -186,7 +460,7 @@
     "Parameters": [
       {
         "Name": "entity",
-        "Type": "webapi.Models.UserDto",
+        "Type": "webapi.Dtos.UserDto",
         "IsRequired": true
       }
     ],
@@ -200,6 +474,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "webapi.Controllers.TestController",
+    "Method": "Lislogin",
+    "RelativePath": "api/Test/Lislogin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "testDto",
+        "Type": "webapi.Dtos.His.WwfPersonDto",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -263,7 +553,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "webapi.Models.CreateOrUpdateUserDto",
+        "Type": "webapi.Dtos.CreateOrUpdateUserDto",
         "IsRequired": true
       }
     ],
@@ -279,7 +569,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "webapi.Models.CreateOrUpdateUserDto",
+        "Type": "webapi.Dtos.CreateOrUpdateUserDto",
         "IsRequired": true
       }
     ],
@@ -311,7 +601,7 @@
     "Parameters": [
       {
         "Name": "ids",
-        "Type": "webapi.Models.UpdateStatusUserDto",
+        "Type": "webapi.Dtos.UpdateStatusUserDto",
         "IsRequired": true
       }
     ],

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using webapi.Common;
 using webapi.Models.BaseData;
 using webapi.Dtos;
+using webapi.Dtos.His;
 using webapi.Services.Lis;
 
 namespace webapi.Controllers
@@ -19,12 +20,13 @@ namespace webapi.Controllers
             _wwfPersonServices = wwfPersonServices;
             _lisDbName = configuration["DbNames:Lis"]; // 读取配置
         }
+        [AllowAnonymous]
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             return Ok(ApiResponse.Ok("Test GetAll successful"));
         }
-
+        [AllowAnonymous]
         [HttpPost("Create")]
         public IActionResult Create([FromBody] UserDto entity)
         {
@@ -35,9 +37,7 @@ namespace webapi.Controllers
         [HttpPost("Lislogin")]
         public IActionResult Lislogin([FromBody] WwfPersonDto testDto)
         {
-            var aa = _wwfPersonServices.GetAll(_lisDbName);
-            var pas = Password.Encrypt(testDto.fpass);
-            return Ok(ApiResponse.Ok("Test Create successful ++ " + aa.Count));
+            return Ok(ApiResponse.Ok("Test Create successful "));
         }
     }
 }

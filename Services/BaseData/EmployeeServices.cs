@@ -14,7 +14,6 @@ namespace webapi.Services
         public int Add(EMPLOYEE entity) => _repo.Add(entity);
 
         public List<EMPLOYEE> GetAll() => _repo.GetAll();
-
         public EMPLOYEE GetById(int id) => _repo.GetById(id);
     }
 }

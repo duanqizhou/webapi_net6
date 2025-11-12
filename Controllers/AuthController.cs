@@ -36,82 +36,90 @@ public class AuthController : ControllerBase
         _userServices = userServices;
         _wwfPersonServices = wwfPersonServices;
         _lisDbName = configuration["DbNames:Lis"];
-
     }
 
     [AllowAnonymous]
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginUserDto req)
     {
-
-        if (req.code != "zdq")
-            return Unauthorized(ApiResponse.Error("验证码错误", 401));
-        if (string.IsNullOrWhiteSpace(req.EMPID))
-            return BadRequest(ApiResponse.Error("用户名不能为空", 400));
-
-        switch (req.Sys)
+        try
         {
-            case SysEnum.HIS:
+            if (req.code != "zdq")
+                return Unauthorized(ApiResponse.Error("验证码错误", 401));
+            if (string.IsNullOrWhiteSpace(req.EMPID))
+                return BadRequest(ApiResponse.Error("用户名不能为空", 400));
 
-                // 获取用户，假设你用 EMPID 登录
-                var user = _userServices.GetAll().FirstOrDefault(u => u.EMPID.ToLower() == req.EMPID.ToLower() || u.LOGINID.ToLower() == req.EMPID.ToLower());
-                if (user == null)
-                    return Unauthorized(ApiResponse.Error("未找到用户", 401));
+            switch (req.Sys)
+            {
+                case SysEnum.HIS:
 
-                if (!Password.Verify(req.Password, user.PASSWORD))
-                {
-                    return Unauthorized(ApiResponse.Error("用户名或密码错误", 401));
-                }
+                    // 获取用户，假设你用 EMPID 登录
+                    var user = _userServices.GetAll().FirstOrDefault(u => u.EMPID.ToLower() == req.EMPID.ToLower() || u.LOGINID.ToLower() == req.EMPID.ToLower());
+                    if (user == null)
+                        return Unauthorized(ApiResponse.Error("未找到用户", 401));
 
-                // 创建 JWT Token
-                var userId = user.EMPID;
-                var userIdStr = user.EMPID;
-                var accessToken = _jwt.GenerateToken(userIdStr, user.NAME);
-                var refreshToken = _jwt.GenerateRefreshToken();
+                    if (!Password.Verify(req.Password, user.PASSWORD))
+                    {
+                        return Unauthorized(ApiResponse.Error("用户名或密码错误", 401));
+                    }
 
-                // 保存 RefreshToken（你需改造 UserToken 表或另建新表）
-                var userToken = new UserToken
-                {
-                    UserId = Convert.ToInt32(userId),
-                    UserIdStr = userIdStr,
-                    RefreshToken = refreshToken,
-                    ExpireAt = DateTime.UtcNow.AddDays(7)
-                };
-                _services.Add(userToken); // 注意这里 _services 可能需调整为专门 token 的 service
+                    // 创建 JWT Token
+                    var userId = user.EMPID;
+                    var userIdStr = user.EMPID;
+                    var accessToken = _jwt.GenerateToken(userIdStr, user.NAME);
+                    var refreshToken = _jwt.GenerateRefreshToken();
 
-                return Ok(ApiResponse.Ok(new
-                {
-                    token = accessToken,
-                    refreshToken,
-                }));
-            case SysEnum.LIS:
-                var lisPer = _wwfPersonServices.GetById(req.EMPID, _lisDbName);
+                    // 保存 RefreshToken（你需改造 UserToken 表或另建新表）
+                    var userToken = new UserToken
+                    {
+                        UserId = Convert.ToInt32(userId),
+                        UserIdStr = userIdStr,
+                        RefreshToken = refreshToken,
+                        ExpireAt = DateTime.UtcNow.AddDays(7)
+                    };
+                    _services.Add(userToken); // 注意这里 _services 可能需调整为专门 token 的 service
 
-                if (lisPer == null)
-                    return Unauthorized(ApiResponse.Error("未找到用户", 401));
-                string pwd = Password.StrToEncrypt("MD5", req.Password);
-                if (lisPer.fpass != pwd)
-                {
-                    return Unauthorized(ApiResponse.Error("用户名或密码错误", 401));
-                }
-                var fperson_id = lisPer.fperson_id;
-                var accessTokenLis = _jwt.GenerateToken(fperson_id, lisPer.fname);
-                var refreshTokenLis = _jwt.GenerateRefreshToken();
-                var lisUserToken = new UserToken
-                {
-                    UserIdStr = fperson_id,
-                    RefreshToken = refreshTokenLis,
-                    ExpireAt = DateTime.UtcNow.AddDays(7)
-                };
-                _services.Add(lisUserToken);
-                return Ok(ApiResponse.Ok(new
-                {
-                    token = accessTokenLis,
-                    refreshTokenLis,
-                }));
-            default:
-                return Ok(ApiResponse.OkMsg("无此系统权限", new { token = "" }));
+                    return Ok(ApiResponse.Ok(new
+                    {
+                        token = accessToken,
+                        refreshToken,
+                    }));
+                case SysEnum.LIS:
+                    var lisPer = _wwfPersonServices.GetById(req.EMPID, _lisDbName);
+
+                    if (lisPer == null)
+                        return Unauthorized(ApiResponse.Error("未找到用户", 401));
+                    string pwd = Password.StrToEncrypt("MD5", req.Password);
+                    if (lisPer.fpass != pwd)
+                    {
+                        return Unauthorized(ApiResponse.Error("用户名或密码错误", 401));
+                    }
+                    var fperson_id = lisPer.fperson_id;
+                    var accessTokenLis = _jwt.GenerateToken(fperson_id, lisPer.fname);
+                    var refreshTokenLis = _jwt.GenerateRefreshToken();
+                    var lisUserToken = new UserToken
+                    {
+                        UserIdStr = fperson_id,
+                        RefreshToken = refreshTokenLis,
+                        ExpireAt = DateTime.UtcNow.AddDays(7)
+                    };
+                    _services.Add(lisUserToken);
+                    return Ok(ApiResponse.Ok(new
+                    {
+                        token = accessTokenLis,
+                        refreshTokenLis,
+                    }));
+                default:
+                    return Ok(ApiResponse.OkMsg("无此系统权限", new { token = "" }));
+            }
         }
+        catch (Exception ex)
+        {
+            log.Error("Login Err", ex);
+            return StatusCode(400, ApiResponse.Error("Login Error"));
+        }
+
+
 
     }
 
@@ -120,28 +128,36 @@ public class AuthController : ControllerBase
     {
 
         // 验证 refreshToken 是否存在
-        var userToken = _services.GetAll().FirstOrDefault(t => t.RefreshToken == req.RefreshToken);
-        if (userToken == null || userToken.ExpireAt < DateTime.UtcNow)
+        try
         {
-            return Unauthorized(ApiResponse.Error("无效或过期的 Refresh Token", 401));
+            var userToken = _services.GetAll().FirstOrDefault(t => t.RefreshToken == req.RefreshToken);
+            if (userToken == null || userToken.ExpireAt < DateTime.UtcNow)
+            {
+                return Unauthorized(ApiResponse.Error("无效或过期的 Refresh Token", 401));
+            }
+
+            // 生成新的 access token
+            var newAccessToken = _jwt.GenerateToken(userToken.UserId.ToString(), "admin");
+            var newRefreshToken = _jwt.GenerateRefreshToken();
+
+            // 更新数据库中的 refresh token
+            userToken.RefreshToken = newRefreshToken;
+            userToken.ExpireAt = DateTime.UtcNow.AddDays(7);
+            _services.Update(userToken);
+            var user = userToken.Adapt<UserTokenDto>();
+            log.Info($"用户 {userToken.UserId} 刷新 Token 成功，生成新的 Access Token 和 Refresh Token");
+            return Ok(ApiResponse.Ok(new
+            {
+                token = newAccessToken,
+                refreshToken = newRefreshToken,
+                user
+            }));
         }
-
-        // 生成新的 access token
-        var newAccessToken = _jwt.GenerateToken(userToken.UserId.ToString(), "admin");
-        var newRefreshToken = _jwt.GenerateRefreshToken();
-
-        // 更新数据库中的 refresh token
-        userToken.RefreshToken = newRefreshToken;
-        userToken.ExpireAt = DateTime.UtcNow.AddDays(7);
-        _services.Update(userToken);
-        var user = userToken.Adapt<UserTokenDto>();
-        log.Info($"用户 {userToken.UserId} 刷新 Token 成功，生成新的 Access Token 和 Refresh Token");
-        return Ok(ApiResponse.Ok(new
+        catch (Exception ex)
         {
-            token = newAccessToken,
-            refreshToken = newRefreshToken,
-            user
-        }));
+            log.Error("RefreshToken Error", ex);
+            return StatusCode(400, ApiResponse.Error("Login Error"));
+        }
     }
 
 }

@@ -22,7 +22,6 @@ namespace webapi.Controllers
         private readonly SqlSugarTransactionHelper _tranHelper;
         private readonly IUserServices _userServices;
         private readonly IEmployeeServices _employeeServices;
-
         private readonly ICacheService _cacheService;
         private readonly ILog _logger = LogManager.GetLogger(typeof(UserController));
 
@@ -46,7 +45,7 @@ namespace webapi.Controllers
             {
                 // 记录异常日志
                 _logger.Error($"Error in GetMaxEmpid: {ex.Message}");
-                return StatusCode(500, ApiResponse.Error("获取最大登录ID失败"));
+                return StatusCode(400, ApiResponse.Error("获取最大登录ID失败"));
             }
         }
 

@@ -3,24 +3,47 @@ using webapi.Models.BaseData;
 using System.Collections.Generic;
 using System;
 using webapi.Services;
+using webapi.Services.Lis;
+using webapi.Models.LIS;
+using Mapster;
+using webapi.Dtos.His;
 
 namespace webapi.Common
 {
     public class CacheService : ICacheService
     {
+        private readonly string _lisDbName;
+
+        #region HIS
         private readonly IMemoryCache _memoryCache;
         private readonly IDeptServices _deptServices;
         private readonly IEmployeeServices _employeeServices;
         private readonly IAppsetingsServices _appsetingsServices;
+        #endregion
+
+        #region LIS
+        private readonly IWwfPersonServices _wwfPersonServices;
+        private readonly IWwfDeptServices _wwfDeptServices;
+
+        private readonly IWwfSysServices _wwfSysServices;
+
+        #endregion
 
         private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(CacheService));
 
-        public CacheService(IMemoryCache memoryCache, IDeptServices deptServices, IEmployeeServices employeeServices, IAppsetingsServices appsetingsServices)
+        public CacheService(IConfiguration configuration, IMemoryCache memoryCache,
+        IDeptServices deptServices, IEmployeeServices employeeServices,
+        IAppsetingsServices appsetingsServices, IWwfDeptServices wwfDeptServices,
+        IWwfPersonServices wwfPersonServices, IWwfSysServices wwfSysServices)
         {
+            _lisDbName = configuration["DbNames:Lis"]; // 读取配置
             _memoryCache = memoryCache;
             _deptServices = deptServices;
             _employeeServices = employeeServices;
-            _appsetingsServices = appsetingsServices;   
+            _appsetingsServices = appsetingsServices;
+            _wwfDeptServices = wwfDeptServices;
+            _wwfPersonServices = wwfPersonServices;
+            _wwfSysServices = wwfSysServices;
         }
 
         // 手动更新缓存
@@ -42,7 +65,7 @@ namespace webapi.Common
             if (cachedData == null)
             {
                 // 缓存未命中，获取数据并存入缓存
-                
+
                 cachedData = dataLoader();
                 _logger.Info($"缓存未命中，正在加载数据: {cacheName}");
                 // 设置缓存数据
@@ -88,6 +111,40 @@ namespace webapi.Common
         {
             return _appsetingsServices.GetAll() ?? new List<APPSETTINGS>();
         }
+
+        #region lis
+        public List<WWF_DEPT> GetWwfDept()
+        {
+            return GetCachedData(CacheName.wwfdept, LoadWwfDeptFromLis);
+        }
+
+        private List<WWF_DEPT> LoadWwfDeptFromLis()
+        {
+            return _wwfDeptServices.GetAll() ?? new List<WWF_DEPT>();
+        }
+
+
+        public List<WwfPersonDto> GetWwfPerson()
+        {
+            return GetCachedData(CacheName.wwfperson, LoadWwfPersonFromLis);
+        }
+        private List<WwfPersonDto> LoadWwfPersonFromLis()
+        {
+            var list = _wwfPersonServices.GetAll() ?? new List<WWF_PERSON>();
+            return list.Adapt<List<WwfPersonDto>>();
+        }
+
+        public List<WWF_SYS> GetWwfSys()
+        {
+            return GetCachedData(CacheName.wwfsys, LoadWwfSysFromLis);
+        }
+
+        private List<WWF_SYS> LoadWwfSysFromLis()
+        {
+            return _wwfSysServices.GetAll() ?? new List<WWF_SYS>();
+        }
+
+        #endregion
 
 
 
