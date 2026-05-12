@@ -22,8 +22,8 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     public List<T> GetList(Expression<Func<T, bool>> predicate, string dbName = "BaseData")
         => Db(dbName).Queryable<T>().Where(predicate).ToList();
 
-    public T GetSingle(Expression<Func<T, bool>> predicate, string dbName = "BaseData")
-        => Db(dbName).Queryable<T>().Where(predicate).First();
+    public T? GetSingle(Expression<Func<T, bool>> predicate, string dbName = "BaseData")
+        => Db(dbName).Queryable<T>().Where(predicate).FirstOrDefault();
 
     public T GetById(int id, string dbName = "BaseData")
         => Db(dbName).Queryable<T>().InSingle(id);

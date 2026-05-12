@@ -76,7 +76,7 @@ public class BaseDrugServices : IBaseDrugServices
         return _repo.DeleteRange(ids);
     }
 
-    public DM_DICT GetSingle(Expression<Func<DM_DICT, bool>> predicate)
+    public DM_DICT? GetSingle(Expression<Func<DM_DICT, bool>> predicate)
     {
         return _repo.GetSingle(predicate);
     }

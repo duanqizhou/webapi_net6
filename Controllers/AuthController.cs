@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
                 case SysEnum.HIS:
 
                     // 获取用户，假设你用 EMPID 登录
-                    var user = _userServices.GetAll().FirstOrDefault(u => u.EMPID.ToLower() == req.EMPID.ToLower() || u.LOGINID.ToLower() == req.EMPID.ToLower());
+                    var user = _userServices.GetSingle(u => u.EMPID.ToLower() == req.EMPID.ToLower() || u.LOGINID.ToLower() == req.EMPID.ToLower());
                     if (user == null)
                         return Unauthorized(ApiResponse.Error("未找到用户", 401));
 
@@ -130,7 +130,7 @@ public class AuthController : ControllerBase
         // 验证 refreshToken 是否存在
         try
         {
-            var userToken = _services.GetAll().FirstOrDefault(t => t.RefreshToken == req.RefreshToken);
+            var userToken = _services.GetByRefreshToken(req.RefreshToken);
             if (userToken == null || userToken.ExpireAt < DateTime.UtcNow)
             {
                 return Unauthorized(ApiResponse.Error("无效或过期的 Refresh Token", 401));

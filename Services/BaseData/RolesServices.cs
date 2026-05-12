@@ -62,7 +62,7 @@ public class ROLESServices : IROLESServices
         return _repo.DeleteRange(ids);
     }
 
-    public ROLES GetSingle(Expression<Func<ROLES, bool>> predicate)
+    public ROLES? GetSingle(Expression<Func<ROLES, bool>> predicate)
     {
         return _repo.GetSingle(predicate);
     }

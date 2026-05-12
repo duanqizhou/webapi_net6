@@ -57,7 +57,7 @@ public class UserServices : IUserServices
     public int AddRange(List<ACCOUNTS> entities) => _repo.AddRange(entities);
     public int Delete(Expression<Func<ACCOUNTS, bool>> predicate) => _repo.Delete(predicate);
     public int DeleteRange(List<int> ids) => _repo.DeleteRange(ids);
-    public ACCOUNTS GetSingle(Expression<Func<ACCOUNTS, bool>> predicate) => _repo.GetSingle(predicate);
+    public ACCOUNTS? GetSingle(Expression<Func<ACCOUNTS, bool>> predicate) => _repo.GetSingle(predicate);
 
     /// <summary>
     /// 获取最大 LoginId（默认库 BaseData）

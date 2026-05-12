@@ -11,7 +11,7 @@ public interface IBaseServices<T> where T : class
     T GetById(string id);
 
     List<T> GetList(Expression<Func<T, bool>> predicate);
-    T GetSingle(Expression<Func<T, bool>> predicate);
+    T? GetSingle(Expression<Func<T, bool>> predicate);
 
     int Add(T entity);
     Task<bool> AddAsync(T entity);

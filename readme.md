@@ -135,6 +135,17 @@ CREATE TABLE RolePermissions (
     PermissionId INT
 );
 
+CREATE TABLE [dbo].[UserToken](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [int] NOT NULL,
+	[UserIdStr] [nvarchar](200) NULL,
+	[RefreshToken] [nvarchar](200) NOT NULL,
+	[ExpireAt] [datetime] NOT NULL,
+ CONSTRAINT [PK__UserToke__3214EC0705923C4C] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
 通过 RBAC 设计，系统可以灵活地为不同用户分配不同角色和权限，满足企业级后台管理系统的权限需求。
 ## 🔐 权限控制（RBAC）

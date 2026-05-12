@@ -14,6 +14,8 @@ public class AuthServices : IAuthServices
 
     public List<UserToken> GetAll() => _repo.GetAll();
 
+    public UserToken? GetByRefreshToken(string refreshToken) => _repo.GetSingle(t => t.RefreshToken == refreshToken);
+
     public int Add(UserToken entity) => _repo.Add(entity);
     public int Update(UserToken entity) => _repo.Update(entity);
 }

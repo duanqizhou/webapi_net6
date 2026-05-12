@@ -26,16 +26,16 @@ namespace webapi.Models.BaseData
            /// <summary>
            /// Desc:
            /// Default:
-           /// Nullable:True
+           /// Nullable:False
            /// </summary>           
-           public string UserIdStr {get;set;}
+           public int UserId {get;set;}
 
            /// <summary>
            /// Desc:
            /// Default:
            /// Nullable:True
            /// </summary>           
-           public int? UserId {get;set;}
+           public string UserIdStr {get;set;}
 
            /// <summary>
            /// Desc:

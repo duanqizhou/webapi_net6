@@ -65,7 +65,7 @@ public class BaseMatServices : IBaseMatServices
         return _repo.DeleteRange(ids);
     }
 
-    public MedicalMaterial GetSingle(Expression<Func<MedicalMaterial, bool>> predicate)
+    public MedicalMaterial? GetSingle(Expression<Func<MedicalMaterial, bool>> predicate)
     {
         return _repo.GetSingle(predicate);
     }

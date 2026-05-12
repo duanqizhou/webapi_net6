@@ -10,7 +10,7 @@ public interface IBaseLisServices<T> where T : class
     T GetById(int id,string DbName);
     T GetById(string id,string DbName);
     List<T> GetList(Expression<Func<T, bool>> predicate,string DbName);
-    T GetSingle(Expression<Func<T, bool>> predicate,string DbName);
+    T? GetSingle(Expression<Func<T, bool>> predicate,string DbName);
     int Add(T entity,string DbName);
     Task<bool> AddAsync(T entity,string DbName);
     int AddRange(List<T> entities,string DbName);

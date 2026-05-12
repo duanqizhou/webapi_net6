@@ -9,7 +9,7 @@ public interface IBaseRepository<T>
     T GetById(int id, string dbName = "BaseData");
     T GetById(string id, string dbName = "BaseData");
     List<T> GetList(Expression<Func<T, bool>> predicate, string dbName = "BaseData");
-    T GetSingle(Expression<Func<T, bool>> predicate, string dbName = "BaseData");
+    T? GetSingle(Expression<Func<T, bool>> predicate, string dbName = "BaseData");
     int Add(T entity, string dbName = "BaseData");
     Task<bool> AddAsync(T entity, string dbName = "BaseData");
     int AddRange(List<T> entities, string dbName = "BaseData");

@@ -66,7 +66,7 @@ public class BaseCureServices : IBaseCureServices
         return _repo.DeleteRange(ids);
     }
 
-    public Consulting GetSingle(Expression<Func<Consulting, bool>> predicate)
+    public Consulting? GetSingle(Expression<Func<Consulting, bool>> predicate)
     {
         return _repo.GetSingle(predicate);
     }
